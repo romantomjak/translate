@@ -15,7 +15,7 @@ func assertEqual(t *testing.T, got, want string) {
 func TestNewPreparedRequest(t *testing.T) {
 	client := NewClient()
 
-	req, _ := client.newRequest(url.Values{"hello": {"world"}})
+	req, _ := client.NewRequest(url.Values{"hello": {"world"}})
 	req.ParseForm()
 
 	assertEqual(t, req.Method, "POST")

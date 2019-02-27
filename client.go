@@ -18,6 +18,9 @@ type Client struct {
 
 	// User agent for client
 	UserAgent string
+
+	// Base URL for API requests.
+	BaseURL *url.URL
 }
 
 // NewClient returns a new Cloud Translation API client
@@ -28,8 +31,8 @@ func NewClient() *Client {
 	}
 }
 
-// newRequest returns a HTTP request ready for use with Client.Do
-func (c *Client) newRequest(data url.Values) (*http.Request, error) {
+// NewRequest returns a HTTP request ready for use with Client.Do
+func (c *Client) NewRequest(data url.Values) (*http.Request, error) {
 	req, err := http.NewRequest("POST", "https://translation.googleapis.com/language/translate/v2", strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
@@ -39,4 +42,13 @@ func (c *Client) newRequest(data url.Values) (*http.Request, error) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	return req, nil
+}
+
+// Do sends an API request and returns the API response
+func (c *Client) Do(req *http.Request) (*http.Response, error) {
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }

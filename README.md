@@ -42,6 +42,13 @@ you can, of course, override these values via arguments:
 $ translate -to hk stabs
 ```
 
+## Contributing
+
+You can contribute in many ways and not just by changing the code! If you have 
+any ideas, just open an issue and tell me what you think.
+
+Contributing code-wise - please fork the repository and submit a pull request.
+
 ## License
 
 MIT

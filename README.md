@@ -8,6 +8,12 @@ Command line client for Google's Cloud Translation API
 
 You'll need to sign up for [Cloud Translation](https://cloud.google.com/translate/) to get your API Key.
 
+## Install
+
+```shell
+$ go get -u github.com/romantomjak/translate
+```
+
 ## Usage
 
 To translate with automatic source language detection:

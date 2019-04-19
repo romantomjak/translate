@@ -1,4 +1,4 @@
-package translate
+package main
 
 import (
 	"net/http"
@@ -16,6 +16,9 @@ type Client struct {
 	// HTTP client used to communicate with CT API
 	client *http.Client
 
+	// Google's Cloud Translation API key
+	apiKey string
+
 	// User agent for client
 	UserAgent string
 
@@ -24,15 +27,18 @@ type Client struct {
 }
 
 // NewClient returns a new Cloud Translation API client
-func NewClient() *Client {
+func NewClient(APIKey string) *Client {
 	return &Client{
 		client:    http.DefaultClient,
+		apiKey:    APIKey,
 		UserAgent: userAgent,
 	}
 }
 
 // NewRequest returns a HTTP request ready for use with Client.Do
 func (c *Client) NewRequest(data url.Values) (*http.Request, error) {
+	data.Add("key", c.apiKey)
+
 	req, err := http.NewRequest("POST", "https://translation.googleapis.com/language/translate/v2", strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err

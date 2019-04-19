@@ -1,7 +1,8 @@
-package translate
+package main
 
 import (
-	"net/http"
+	"encoding/json"
+	"fmt"
 	"net/url"
 )
 

@@ -1,4 +1,4 @@
-package translate
+package main
 
 import (
 	"net/url"

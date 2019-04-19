@@ -11,6 +11,12 @@ type Translator struct {
 	Client *Client
 }
 
+// Translation is a translation request result
+type Translation struct {
+	TranslatedText         string `json:"translatedText"`
+	DetectedSourceLanguage string `json:"detectedSourceLanguage"`
+}
+
 // NewTranslator returns a new Cloud Translation client
 func NewTranslator(client *Client) *Translator {
 	return &Translator{
@@ -19,23 +25,33 @@ func NewTranslator(client *Client) *Translator {
 }
 
 // Translate method translates a string with given parameters
-func (t *Translator) Translate() (*http.Response, error) {
+func (t *Translator) Translate(fromLang, toLang string, text []string) ([]Translation, error) {
 	data := url.Values{
-		"q":      {"stabs"},
-		"target": {"en"},
+		"q":      text,
+		"target": {toLang},
+		"source": {fromLang},
 		"format": {"text"},
-		"key":    {"blah"},
 	}
 
 	req, err := t.Client.NewRequest(data)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot initialise request: %v", err)
 	}
 
 	resp, err := t.Client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("cannot execute request: %v", err)
 	}
 
-	return resp, nil
+	var translationResp struct {
+		Data struct {
+			Translations []Translation `json:"translations"`
+		} `json:"data"`
+	}
+	err = json.NewDecoder(resp.Body).Decode(&translationResp)
+	if err != nil {
+		return nil, fmt.Errorf("cannot decode json: %v", err)
+	}
+
+	return translationResp.Data.Translations, nil
 }

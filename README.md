@@ -28,25 +28,6 @@ or if that doesn't work, specify language manually:
 translate -key xxx -from lv -to en stabs
 ```
 
-but manually specifying `key` and `to` parameters gets tedious, so lets set those values via environment variables:
-
-```shell
-export RT_TRANSLATE_KEY=xxx
-export RT_TRANSLATE_TO=en
-```
-
-then you can execute the binary with a single argument:
-
-```
-translate stabs
-```
-
-You can, of course, override these values via arguments:
-
-```shell
-translate -to hk stabs
-```
-
 ## Contributing
 
 You can contribute in many ways and not just by changing the code! If you have 

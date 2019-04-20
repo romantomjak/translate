@@ -8,7 +8,7 @@ import (
 
 // Translator represents the Cloud Translation service
 type Translator struct {
-	Client *Client
+	client *Client
 }
 
 // Translation is a translation request result
@@ -20,7 +20,7 @@ type Translation struct {
 // NewTranslator returns a new Cloud Translation client
 func NewTranslator(client *Client) *Translator {
 	return &Translator{
-		Client: client,
+		client: client,
 	}
 }
 
@@ -33,12 +33,12 @@ func (t *Translator) Translate(fromLang, toLang string, text []string) ([]Transl
 		"format": {"text"},
 	}
 
-	req, err := t.Client.NewRequest("/language/translate/v2", data)
+	req, err := t.client.NewRequest("/language/translate/v2", data)
 	if err != nil {
 		return nil, fmt.Errorf("cannot initialise request: %v", err)
 	}
 
-	resp, err := t.Client.Do(req)
+	resp, err := t.client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("cannot execute request: %v", err)
 	}

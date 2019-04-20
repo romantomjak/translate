@@ -17,7 +17,7 @@ func setup() {
 	mux = http.NewServeMux()
 	server = httptest.NewServer(mux)
 
-	client = NewClient()
+	client = NewClient(testAPIKey)
 	url, _ := url.Parse(server.URL)
 	client.BaseURL = url
 }
@@ -26,28 +26,23 @@ func teardown() {
 	server.Close()
 }
 
-func assertHttpMethod(t *testing.T, got, want string) {
-	t.Helper()
-	if got != want {
-		t.Errorf("got %+v, want %+v", got, want)
-	}
-}
-
 func TestTranslatorSubmitsCorrectFormData(t *testing.T) {
 	setup()
 	defer teardown()
 
+	fromLang := ""
+	toLang := "en"
+	text := []string{"blahblah"}
+
 	mux.HandleFunc("/language/translate/v2", func(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 
-		assertHttpMethod(t, r.Method, "POST")
-		assertEqual(t, r.Header.Get("User-Agent")[:9], "translate")
-		assertEqual(t, r.Form.Get("q"), "stabs")
-		assertEqual(t, r.Form.Get("target"), "en")
+		assertEqual(t, r.Form.Get("q"), text[0])
+		assertEqual(t, r.Form.Get("target"), toLang)
+		assertEqual(t, r.Form.Get("source"), fromLang)
 		assertEqual(t, r.Form.Get("format"), "text")
-		assertEqual(t, r.Form.Get("key"), "blahllll")
 	})
 
 	translator := NewTranslator(client)
-	translator.Translate()
+	translator.Translate(fromLang, toLang, text)
 }

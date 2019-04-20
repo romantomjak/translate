@@ -33,7 +33,7 @@ func (t *Translator) Translate(fromLang, toLang string, text []string) ([]Transl
 		"format": {"text"},
 	}
 
-	req, err := t.Client.NewRequest(data)
+	req, err := t.Client.NewRequest("/language/translate/v2", data)
 	if err != nil {
 		return nil, fmt.Errorf("cannot initialise request: %v", err)
 	}

@@ -26,11 +26,11 @@ Options:
 
   -key=<key>
     The secret key to use to authenticate API requests with.
-	Overrides the GO_TRANSLATE_KEY environment variable if set.
+	Overrides the RT_TRANSLATE_KEY environment variable if set.
 
   -to=<language>
     The ISO-639-1 language code to use for translation of the input text.
-	Overrides the GO_TRANSLATE_TO environment variable if set.
+	Overrides the RT_TRANSLATE_TO environment variable if set.
 
   -from=<language>
 	The ISO-639-1 language code of the source text. If the source

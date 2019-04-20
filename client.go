@@ -8,6 +8,7 @@ import (
 
 const (
 	libraryVersion = "1.0.0"
+	defaultBaseURL = "https://translation.googleapis.com"
 	userAgent      = "translate/" + libraryVersion + " (+https://github.com/romantomjak/translate)"
 )
 
@@ -28,18 +29,27 @@ type Client struct {
 
 // NewClient returns a new Cloud Translation API client
 func NewClient(APIKey string) *Client {
+	baseURL, _ := url.Parse(defaultBaseURL)
 	return &Client{
 		client:    http.DefaultClient,
 		apiKey:    APIKey,
 		UserAgent: userAgent,
+		BaseURL:   baseURL,
 	}
 }
 
 // NewRequest returns a HTTP request ready for use with Client.Do
-func (c *Client) NewRequest(data url.Values) (*http.Request, error) {
+func (c *Client) NewRequest(urlStr string, data url.Values) (*http.Request, error) {
 	data.Add("key", c.apiKey)
 
-	req, err := http.NewRequest("POST", "https://translation.googleapis.com/language/translate/v2", strings.NewReader(data.Encode()))
+	rel, err := url.Parse(urlStr)
+	if err != nil {
+		return nil, err
+	}
+
+	u := c.BaseURL.ResolveReference(rel)
+
+	req, err := http.NewRequest("POST", u.String(), strings.NewReader(data.Encode()))
 	if err != nil {
 		return nil, err
 	}

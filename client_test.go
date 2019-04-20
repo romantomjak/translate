@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+const testAPIKey = "FAKE_API_KEY"
+
 func assertEqual(t *testing.T, got, want string) {
 	t.Helper()
 	if got != want {
@@ -13,12 +15,13 @@ func assertEqual(t *testing.T, got, want string) {
 }
 
 func TestNewPreparedRequest(t *testing.T) {
-	client := NewClient()
+	client := NewClient(testAPIKey)
 
-	req, _ := client.NewRequest(url.Values{"hello": {"world"}})
+	req, _ := client.NewRequest("/", url.Values{"hello": {"world"}})
 	req.ParseForm()
 
 	assertEqual(t, req.Method, "POST")
 	assertEqual(t, req.Header.Get("User-Agent")[:9], "translate")
 	assertEqual(t, req.Form.Get("hello"), "world")
+	assertEqual(t, req.Form.Get("key"), testAPIKey)
 }

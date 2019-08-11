@@ -19,13 +19,36 @@ go get -u github.com/romantomjak/translate
 To translate with automatic source language detection:
 
 ```shell
-translate -key xxx -to en stabs
+$ translate -key xxx -to en kuģis
+ship
 ```
 
 or if that doesn't work, specify language manually:
 
 ```shell
-translate -key xxx -from lv -to en stabs
+$ translate -key xxx -from lv -to en kuģis
+ship
+```
+
+but manually specifying `key` and `to` parameters gets tedious, so lets set those values via environment variables:
+
+```shell
+export TRANSLATE_KEY=xxx
+export TRANSLATE_TO=en
+```
+
+then you can execute the binary with a single argument:
+
+```
+$ translate kuģis
+ship
+```
+
+You can, of course, explicitly override environment values via arguments:
+
+```shell
+$ translate -to fr kuģis
+navire
 ```
 
 ## Contributing

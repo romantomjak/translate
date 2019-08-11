@@ -47,7 +47,7 @@ func main() {
 func Run(stdin io.Reader, stdout, stderr io.Writer, args []string) int {
 	var fromLang, toLang, apiKey string
 
-	flags := flag.NewFlagSet("", flag.ContinueOnError)
+	flags := flag.NewFlagSet("translate", flag.ContinueOnError)
 	flags.StringVar(&fromLang, "from", "", "source language")
 	flags.StringVar(&toLang, "to", "", "target language")
 	flags.StringVar(&apiKey, "key", "", "secret key")
@@ -77,16 +77,15 @@ func Run(stdin io.Reader, stdout, stderr io.Writer, args []string) int {
 		return 1
 	}
 
-	text := flag.Args()
+	text := flags.Args()
 	if len(text) == 0 {
 		fmt.Fprintln(stderr, "error: nothing to translate")
 		return 1
 	}
 
 	client := NewClient(apiKey)
-	translator := NewTranslator(client)
 
-	translations, err := translator.Translate(fromLang, toLang, text)
+	translations, err := client.Translate(fromLang, toLang, text)
 	if err != nil {
 		fmt.Fprintf(stderr, "error: %v\n", err)
 		return 1

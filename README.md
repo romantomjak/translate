@@ -35,7 +35,7 @@ ship
 You can, of course, explicitly override environment values via arguments:
 
 ```shell
-$ translate -key xxx -to fr kuģis
+$ translate -key yyy -to fr kuģis
 navire
 ```
 

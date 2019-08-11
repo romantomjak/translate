@@ -19,36 +19,43 @@ go get -u github.com/romantomjak/translate
 To translate with automatic source language detection:
 
 ```shell
-$ translate -key xxx -to en kuģis
-ship
-```
-
-or if that doesn't work, specify language manually:
-
-```shell
-$ translate -key xxx -from lv -to en kuģis
-ship
-```
-
-but manually specifying `key` and `to` parameters gets tedious, so lets set those values via environment variables:
-
-```shell
-export TRANSLATE_KEY=xxx
-export TRANSLATE_TO=en
-```
-
-then you can execute the binary with a single argument:
-
-```
+$ export TRANSLATE_KEY=xxx
+$ export TRANSLATE_TO=en
 $ translate kuģis
+ship
+```
+
+if that doesn't work, you can specify source language manually:
+
+```shell
+$ translate -from lv kuģis
 ship
 ```
 
 You can, of course, explicitly override environment values via arguments:
 
 ```shell
-$ translate -to fr kuģis
+$ translate -key xxx -to fr kuģis
 navire
+```
+
+### Translating whole sentences
+
+By default each space separated argument is treated as a word and will get translated on its own line like so:
+
+```shell
+$ translate mans kuģis ir visskaistākais
+my
+ship
+and
+the most beautiful
+```
+
+To translate whole sentences, wrap it in quotes like so:
+
+```shell
+$ translate "mans kuģis ir visskaistākais"
+my ship is the most beautiful
 ```
 
 ## Contributing

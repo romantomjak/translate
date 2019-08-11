@@ -1,4 +1,4 @@
-# translate
+# translate [![Build Status](https://travis-ci.org/romantomjak/translate.svg?branch=master)](https://travis-ci.org/romantomjak/translate) [![Coverage Status](https://coveralls.io/repos/github/romantomjak/translate/badge.svg?branch=master)](https://coveralls.io/github/romantomjak/translate?branch=master) [![GoDoc](https://godoc.org/github.com/romantomjak/translate?status.svg)](https://godoc.org/github.com/romantomjak/translate)
 
 Command line client for Google's Cloud Translation API
 

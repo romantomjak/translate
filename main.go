@@ -17,26 +17,26 @@ Usage: translate [options] [args]
 
   Translate words into english with automatic source language detection:
 
-	  $ translate -to en <word1> <word2>
+      $ translate -to en <word1> <word2>
 
   Translate words from Russian to Latvian:
 
-	  $ translate -from ru -to lv <word>
+      $ translate -from ru -to lv <word>
 
 Options:
 
   -key=<key>
     The secret key to use to authenticate API requests with.
-	Overrides the TRANSLATE_KEY environment variable if set.
+    Overrides the TRANSLATE_KEY environment variable if set.
 
   -to=<language>
     The ISO-639-1 language code to use for translation of the input text.
-	Overrides the TRANSLATE_TO environment variable if set.
+    Overrides the TRANSLATE_TO environment variable if set.
 
   -from=<language>
-	The ISO-639-1 language code of the source text. If the source
-	language is not specified, the API will attempt to detect
-	the source language automatically.
+    The ISO-639-1 language code of the source text. If the source
+    language is not specified, the API will attempt to detect
+    the source language automatically.
 `
 )
 
@@ -52,7 +52,7 @@ func Run(stdin io.Reader, stdout, stderr io.Writer, args []string) int {
 	flags.StringVar(&toLang, "to", "", "target language")
 	flags.StringVar(&apiKey, "key", "", "secret key")
 	flags.Usage = func() {
-		fmt.Fprint(stderr, strings.TrimSpace(usage))
+		fmt.Fprintln(stderr, strings.TrimSpace(usage))
 	}
 
 	if err := flags.Parse(args); err != nil {
